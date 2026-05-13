@@ -1,12 +1,36 @@
-pub val SDL_AUDIO_MASK_BITSIZE = 0x000000FF
-pub val SDL_AUDIO_MASK_DATATYPE = 1 << 8
-pub val SDL_AUDIO_MASK_ENDIAN = 1 << 12
-pub val SDL_AUDIO_MASK_SIGNED = 1 << 15
+link "-lSDL2"
 
+pub val SDL_AUDIO_MASK_BITSIZE  = 0x000000FF
+pub val SDL_AUDIO_MASK_DATATYPE = 1 << 8
+pub val SDL_AUDIO_MASK_ENDIAN   = 1 << 12
+pub val SDL_AUDIO_MASK_SIGNED   = 1 << 15
+
+pub val AUDIO_U8     = 0x0008
+pub val AUDIO_S8     = 0x8008
+pub val AUDIO_U16LSB = 0x0010
+pub val AUDIO_S16LSB = 0x8010
+pub val AUDIO_U16MSB = 0x1010
+pub val AUDIO_S16MSB = 0x9010
+pub val AUDIO_U16    = AUDIO_U16LSB
+pub val AUDIO_S16    = AUDIO_S16LSB
+pub val AUDIO_S32LSB = 0x8020
+pub val AUDIO_S32MSB = 0x9020
+pub val AUDIO_S32    = AUDIO_S32LSB
+pub val AUDIO_F32LSB = 0x8120
+pub val AUDIO_F32MSB = 0x9120
+pub val AUDIO_F32    = AUDIO_F32LSB
+pub val AUDIO_U16SYS = AUDIO_U16LSB
+pub val AUDIO_S16SYS = AUDIO_S16LSB
+pub val AUDIO_S32SYS = AUDIO_S32LSB
+pub val AUDIO_F32SYS = AUDIO_F32LSB
+
+pub val SDL_AUDIO_STOPPED = 0
+pub val SDL_AUDIO_PLAYING = 1
+pub val SDL_AUDIO_PAUSED  = 2
 pub val SDL_AUDIO_ALLOW_FREQUENCY_CHANGE = 0x00000001
-pub val SDL_AUDIO_ALLOW_FORMAT_CHANGE = 0x00000002
-pub val SDL_AUDIO_ALLOW_CHANNELS_CHANGE = 0x00000004
-pub val SDL_AUDIO_ALLOW_SAMPLES_CHANGE = 0x00000008
+pub val SDL_AUDIO_ALLOW_FORMAT_CHANGE    = 0x00000002
+pub val SDL_AUDIO_ALLOW_CHANNELS_CHANGE  = 0x00000004
+pub val SDL_AUDIO_ALLOW_SAMPLES_CHANGE   = 0x00000008
 pub val SDL_AUDIO_ALLOW_ANY_CHANGE =
     SDL_AUDIO_ALLOW_FREQUENCY_CHANGE |
     SDL_AUDIO_ALLOW_FORMAT_CHANGE |
@@ -69,3 +93,48 @@ pub extern (C) fn dequeue_audio(
     data: ref void,
     len: u32
 ) u32 = "SDL_DequeueAudio"
+
+
+pub extern (C) fn get_audio_status() i32 = "SDL_GetAudioStatus"
+pub extern (C) fn get_audio_device_status(dev: u32) i32 = "SDL_GetAudioDeviceStatus"
+pub extern (C) fn get_num_audio_devices(iscapture: i32) i32 = "SDL_GetNumAudioDevices"
+pub extern (C) fn get_audio_device_name(index: i32, iscapture: i32) cstr = "SDL_GetAudioDeviceName"
+pub extern (C) fn get_audio_driver(index: i32) cstr = "SDL_GetAudioDriver"
+pub extern (C) fn get_num_audio_drivers() i32 = "SDL_GetNumAudioDrivers"
+pub extern (C) fn get_current_audio_driver() cstr = "SDL_GetCurrentAudioDriver"
+pub extern (C) fn pause_audio_device(dev: u32, pause_on: i32) void = "SDL_PauseAudioDevice"
+pub extern (C) fn lock_audio_device(dev: u32) void = "SDL_LockAudioDevice"
+pub extern (C) fn unlock_audio_device(dev: u32) void = "SDL_UnlockAudioDevice"
+pub extern (C) fn get_queued_audio_size(dev: u32) u32 = "SDL_GetQueuedAudioSize"
+pub extern (C) fn clear_queued_audio(dev: u32) void = "SDL_ClearQueuedAudio"
+pub extern (C) fn convert_audio(cvt: ref AudioCVT) i32 = "SDL_ConvertAudio"
+
+pub extern (C) fn mix_audio(
+    dst: ref u8, 
+    src: ref u8, 
+    len: u32, 
+    volume: i32
+) void = "SDL_MixAudio"
+
+pub extern (C) fn mix_audio_format(
+    dst: ref u8, 
+    src: ref u8, 
+    format: u16, 
+    len: u32, 
+    volume: i32
+) void = "SDL_MixAudioFormat"
+
+pub extern (C) fn build_audio_cvt(
+    cvt: ref AudioCVT,
+    src_format: u16,
+    src_channels: u8,
+    src_rate: i32,
+    dst_format: u16,
+    dst_channels: u8,
+    dst_rate: i32
+) i32 = "SDL_BuildAudioCVT"
+
+
+test {
+
+}
