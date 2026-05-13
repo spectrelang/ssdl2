@@ -1,0 +1,209 @@
+pub val SDL_WINDOWPOS_UNDEFINED_MASK = 0x1FFF0000
+pub val SDL_WINDOWPOS_CENTERED_MASK = 0x2FFF0000
+pub val SDL_WINDOWPOS_UNDEFINED = SDL_WINDOWPOS_UNDEFINED_MASK | 0
+pub val SDL_WINDOWPOS_CENTERED = SDL_WINDOWPOS_CENTERED_MASK | 0
+pub val SDL_WINDOW_FULLSCREEN = 0x00000001
+pub val SDL_WINDOW_OPENGL = 0x00000002
+pub val SDL_WINDOW_SHOWN = 0x00000004
+pub val SDL_WINDOW_HIDDEN = 0x00000008
+pub val SDL_WINDOW_BORDERLESS = 0x00000010
+pub val SDL_WINDOW_RESIZABLE = 0x00000020
+pub val SDL_WINDOW_MINIMIZED = 0x00000040
+pub val SDL_WINDOW_MAXIMIZED = 0x00000080
+pub val SDL_WINDOW_INPUT_GRABBED = 0x00000100
+pub val SDL_WINDOW_INPUT_FOCUS = 0x00000200
+pub val SDL_WINDOW_MOUSE_FOCUS = 0x00000400
+pub val SDL_WINDOW_FULLSCREEN_DESKTOP = SDL_WINDOW_FULLSCREEN | 0x00001000
+pub val SDL_WINDOW_FOREIGN = 0x00000800
+pub val SDL_WINDOW_ALLOW_HIGHDPI = 0x00002000
+pub val SDL_WINDOW_MOUSE_CAPTURE = 0x00004000
+pub val SDL_WINDOW_ALWAYS_ON_TOP = 0x00008000
+pub val SDL_WINDOW_SKIP_TASKBAR = 0x00010000
+pub val SDL_WINDOW_UTILITY = 0x00020000
+pub val SDL_WINDOW_TOOLTIP = 0x00040000
+pub val SDL_WINDOW_POPUP_MENU = 0x00080000
+pub val SDL_WINDOW_VULKAN = 0x10000000
+pub val SDL_WINDOW_METAL = 0x20000000
+
+pub extern type DisplayMode = {
+    format: u32
+    w: i32
+    h: i32
+    refresh_rate: i32
+    driver_data: ref void
+}
+
+pub extern (C) fn create_window(
+    title: cstr,
+    x: i32,
+    y: i32,
+    w: i32,
+    h: i32,
+    flags: u32
+) ref void = "SDL_CreateWindow"
+
+pub extern (C) fn create_window_and_renderer(
+    width: i32,
+    height: i32,
+    window_flags: u32,
+    window: ref ref void,
+    renderer: ref ref void
+) i32 = "SDL_CreateWindowAndRenderer"
+
+pub extern (C) fn destroy_window(window: ref void) void = "SDL_DestroyWindow"
+pub extern (C) fn show_window(window: ref void) void = "SDL_ShowWindow"
+pub extern (C) fn hide_window(window: ref void) void = "SDL_HideWindow"
+pub extern (C) fn raise_window(window: ref void) void = "SDL_RaiseWindow"
+pub extern (C) fn maximize_window(window: ref void) void = "SDL_MaximizeWindow"
+pub extern (C) fn minimize_window(window: ref void) void = "SDL_MinimizeWindow"
+pub extern (C) fn restore_window(window: ref void) void = "SDL_RestoreWindow"
+pub extern (C) fn set_window_title(
+    window: ref void,
+    title: cstr
+) void = "SDL_SetWindowTitle"
+pub extern (C) fn get_window_title(
+    window: ref void
+) cstr = "SDL_GetWindowTitle"
+pub extern (C) fn set_window_position(
+    window: ref void,
+    x: i32,
+    y: i32
+) void = "SDL_SetWindowPosition"
+
+pub extern (C) fn get_window_position(
+    window: ref void,
+    x: ref i32,
+    y: ref i32
+) void = "SDL_GetWindowPosition"
+
+pub extern (C) fn set_window_size(
+    window: ref void,
+    w: i32,
+    h: i32
+) void = "SDL_SetWindowSize"
+
+pub extern (C) fn get_window_size(
+    window: ref void,
+    w: ref i32,
+    h: ref i32
+) void = "SDL_GetWindowSize"
+
+pub extern (C) fn set_window_minimum_size(
+    window: ref void,
+    min_w: i32,
+    min_h: i32
+) void = "SDL_SetWindowMinimumSize"
+
+pub extern (C) fn get_window_minimum_size(
+    window: ref void,
+    w: ref i32,
+    h: ref i32
+) void = "SDL_GetWindowMinimumSize"
+
+pub extern (C) fn set_window_maximum_size(
+    window: ref void,
+    max_w: i32,
+    max_h: i32
+) void = "SDL_SetWindowMaximumSize"
+
+pub extern (C) fn get_window_maximum_size(
+    window: ref void,
+    w: ref i32,
+    h: ref i32
+) void = "SDL_GetWindowMaximumSize"
+
+pub extern (C) fn set_window_bordered(
+    window: ref void,
+    bordered: i32
+) void = "SDL_SetWindowBordered"
+
+pub extern (C) fn set_window_resizable(
+    window: ref void,
+    resizable: i32
+) void = "SDL_SetWindowResizable"
+
+pub extern (C) fn set_window_fullscreen(
+    window: ref void,
+    flags: u32
+) i32 = "SDL_SetWindowFullscreen"
+
+pub extern (C) fn get_window_flags(
+    window: ref void 
+) u32 = "SDL_GetWindowFlags"
+
+pub extern (C) fn set_window_brightness(
+    window: ref void,
+    brightness: f32
+) i32 = "SDL_SetWindowBrightness"
+
+pub extern (C) fn get_window_brightness(
+    window: ref void
+) f32 = "SDL_GetWindowBrightness"
+
+pub extern (C) fn set_window_opacity(
+    window: ref void,
+    opacity: f32
+) i32 = "SDL_SetWindowOpacity"
+
+pub extern (C) fn get_window_opacity(
+    window: ref void,
+    out_opacity: ref f32
+) i32 = "SDL_GetWindowOpacity"
+
+pub extern (C) fn get_num_video_displays() i32 =
+    "SDL_GetNumVideoDisplays"
+
+pub extern (C) fn get_num_display_modes(
+    display_index: i32
+) i32 = "SDL_GetNumDisplayModes"
+
+pub extern (C) fn get_display_mode(
+    display_index: i32,
+    mode_index: i32,
+    mode: ref DisplayMode
+) i32 = "SDL_GetDisplayMode"
+
+pub extern (C) fn get_current_display_mode(
+    display_index: i32,
+    mode: ref DisplayMode
+) i32 = "SDL_GetCurrentDisplayMode"
+
+pub extern (C) fn get_desktop_display_mode(
+    display_index: i32,
+    mode: ref DisplayMode
+) i32 = "SDL_GetDesktopDisplayMode"
+
+pub extern (C) fn get_window_display_index(
+    window: ref void 
+) i32 = "SDL_GetWindowDisplayIndex"
+
+pub extern (C) fn get_window_display_mode(
+    window: ref void,
+    mode: ref DisplayMode
+) i32 = "SDL_GetWindowDisplayMode"
+
+pub extern (C) fn set_window_display_mode(
+    window: ref void,
+    mode: ref DisplayMode
+) i32 = "SDL_SetWindowDisplayMode"
+
+pub extern (C) fn set_window_grab(
+    window: ref void,
+    grabbed: i32
+) void = "SDL_SetWindowGrab"
+
+pub extern (C) fn get_window_grab(
+    window: ref void
+) i32 = "SDL_GetWindowGrab"
+
+pub extern (C) fn flash_window(
+    window: ref void,
+    operation: u32
+) i32 = "SDL_FlashWindow"
+
+pub val SDL_FLASH_CANCEL = 0
+pub val SDL_FLASH_BRIEFLY = 1
+pub val SDL_FLASH_UNTIL_FOCUSED = 2
+
+test {
+}
