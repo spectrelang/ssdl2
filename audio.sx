@@ -1,0 +1,30 @@
+pub val SDL_AUDIO_MASK_BITSIZE = 0x000000FF
+pub val SDL_AUDIO_MASK_DATATYPE = 1 << 8
+pub val SDL_AUDIO_MASK_ENDIANi = 1 << 12
+pub val SDL_AUDIO_MASK_SIGNED = 1 << 15
+
+pub extern type AudioSpec = {
+    freq: i32
+    format: u16
+    channels: u8
+    samples: u16
+    size: u32
+    callback: ref void
+    user_data: ref void
+}
+
+pub extern type AudioCVT = {
+    needed: u16
+    dst_format: u16
+    rate_incr: f64
+    buf: ref u8
+    len: i32
+    len_cvt: i32
+    len_mult: i32
+    len_ratio: f64
+    filters: [10]ref void
+    filter_index: i32
+}
+
+test {
+}
