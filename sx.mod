@@ -1,7 +1,7 @@
 version "v0.0.1"
 
 build test_all {
-    action "spectre audio.sx --test && spectre window.sx --test && spectre input.sx --test"
+    action "spectre all.sx --test && spectre audio.sx --test && spectre window.sx --test && spectre controls.sx --test"
 }
 build test_audio {
     entry "./audio.sx"
