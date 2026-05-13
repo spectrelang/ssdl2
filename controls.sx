@@ -1,3 +1,5 @@
+link "-lSDL2"
+
 pub val SDL_SCANCODE_UNKNOWN = 0
 pub val SDL_SCANCODE_A = 4
 pub val SDL_SCANCODE_B = 5
