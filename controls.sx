@@ -63,7 +63,7 @@ pub extern type Keysym = {
 }
 
 pub extern type KeyboardEvent = {
-    type: u32
+    typ: u32
     timestamp: u32
     windowID: u32
     state: u8
@@ -74,7 +74,7 @@ pub extern type KeyboardEvent = {
 }
 
 pub extern type MouseMotionEvent = {
-    type: u32
+    typ: u32
     timestamp: u32
     windowID: u32
     which: u32
@@ -86,7 +86,7 @@ pub extern type MouseMotionEvent = {
 }
 
 pub extern type MouseButtonEvent = {
-    type: u32
+    typ: u32
     timestamp: u32
     windowID: u32
     which: u32
