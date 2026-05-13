@@ -1,0 +1,22 @@
+link "-lSDL2"
+
+pub val INIT_TIMER = 0x00000001
+pub val INIT_AUDIO = 0x00000010
+pub val INIT_VIDEO = 0x00000020
+pub val INIT_JOYSTICK = 0x00000200
+pub val INIT_HAPTIC = 0x00001000
+pub val INIT_GAMECONTROLLER = 0x00002000
+pub val INIT_EVENTS = 0x00004000
+pub val INIT_SENSOR = 0x00008000
+pub val INIT_NOPARACHUTE = 0x00100000
+pub val INIT_EVERYTHING = 0x0000FFFF
+
+pub extern (C) fn init(flags: u32) i32 = "SDL_Init"
+pub extern (C) fn init_subsystem(flags: u32) i32 = "SDL_InitSubSystem"
+pub extern (C) fn quit_subsystem(flags: u32) void = "SDL_QuitSubSystem"
+pub extern (C) fn was_init(flags: u32) u32 = "SDL_WasInit"
+pub extern (C) fn quit() void = "SDL_Quit"
+pub extern (C) fn set_main_ready() void = "SDL_SetMainReady"
+pub extern (C) fn get_error() cstr = "SDL_GetError"
+pub extern (C) fn clear_error() void = "SDL_ClearError"
+pub extern (C) fn get_error_msg(errstr: ref u8, maxlen: i32) ref u8 = "SDL_GetErrorMsg"

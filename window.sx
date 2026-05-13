@@ -13,10 +13,12 @@ pub val SDL_WINDOW_RESIZABLE = 0x00000020
 pub val SDL_WINDOW_MINIMIZED = 0x00000040
 pub val SDL_WINDOW_MAXIMIZED = 0x00000080
 pub val SDL_WINDOW_INPUT_GRABBED = 0x00000100
+pub val SDL_WINDOW_MOUSE_GRABBED = 0x00000100
 pub val SDL_WINDOW_INPUT_FOCUS = 0x00000200
 pub val SDL_WINDOW_MOUSE_FOCUS = 0x00000400
 pub val SDL_WINDOW_FULLSCREEN_DESKTOP = SDL_WINDOW_FULLSCREEN | 0x00001000
 pub val SDL_WINDOW_FOREIGN = 0x00000800
+pub val SDL_WINDOW_KEYBOARD_GRABBED = 0x00100000
 pub val SDL_WINDOW_ALLOW_HIGHDPI = 0x00002000
 pub val SDL_WINDOW_MOUSE_CAPTURE = 0x00004000
 pub val SDL_WINDOW_ALWAYS_ON_TOP = 0x00008000
@@ -35,6 +37,13 @@ pub extern type DisplayMode = {
     driver_data: ref void
 }
 
+pub extern type Rect = {
+    x: i32
+    y: i32
+    w: i32
+    h: i32
+}
+
 pub extern (C) fn create_window(
     title: cstr,
     x: i32,
@@ -43,6 +52,8 @@ pub extern (C) fn create_window(
     h: i32,
     flags: u32
 ) ref void = "SDL_CreateWindow"
+
+pub extern (C) fn create_window_from(data: ref void) ref void = "SDL_CreateWindowFrom"
 
 pub extern (C) fn create_window_and_renderer(
     width: i32,
@@ -53,6 +64,9 @@ pub extern (C) fn create_window_and_renderer(
 ) i32 = "SDL_CreateWindowAndRenderer"
 
 pub extern (C) fn destroy_window(window: ref void) void = "SDL_DestroyWindow"
+pub extern (C) fn has_window_surface(window: ref void) i32 = "SDL_HasWindowSurface"
+pub extern (C) fn get_window_id(window: ref void) u32 = "SDL_GetWindowID"
+pub extern (C) fn get_window_from_id(id: u32) ref void = "SDL_GetWindowFromID"
 pub extern (C) fn show_window(window: ref void) void = "SDL_ShowWindow"
 pub extern (C) fn hide_window(window: ref void) void = "SDL_HideWindow"
 pub extern (C) fn raise_window(window: ref void) void = "SDL_RaiseWindow"
@@ -124,6 +138,11 @@ pub extern (C) fn set_window_resizable(
     resizable: i32
 ) void = "SDL_SetWindowResizable"
 
+pub extern (C) fn set_window_always_on_top(
+    window: ref void,
+    on_top: i32
+) void = "SDL_SetWindowAlwaysOnTop"
+
 pub extern (C) fn set_window_fullscreen(
     window: ref void,
     flags: u32
@@ -141,6 +160,21 @@ pub extern (C) fn set_window_brightness(
 pub extern (C) fn get_window_brightness(
     window: ref void
 ) f32 = "SDL_GetWindowBrightness"
+
+pub extern (C) fn get_window_surface(window: ref void) ref void =
+    "SDL_GetWindowSurface"
+
+pub extern (C) fn update_window_surface(window: ref void) i32 =
+    "SDL_UpdateWindowSurface"
+
+pub extern (C) fn update_window_surface_rects(
+    window: ref void,
+    rects: ref Rect,
+    numrects: i32
+) i32 = "SDL_UpdateWindowSurfaceRects"
+
+pub extern (C) fn destroy_window_surface(window: ref void) i32 =
+    "SDL_DestroyWindowSurface"
 
 pub extern (C) fn set_window_opacity(
     window: ref void,
@@ -189,14 +223,79 @@ pub extern (C) fn set_window_display_mode(
     mode: ref DisplayMode
 ) i32 = "SDL_SetWindowDisplayMode"
 
+pub extern (C) fn get_window_borders_size(
+    window: ref void,
+    top: ref i32,
+    left: ref i32,
+    bottom: ref i32,
+    right: ref i32
+) i32 = "SDL_GetWindowBordersSize"
+
+pub extern (C) fn get_window_size_in_pixels(
+    window: ref void,
+    w: ref i32,
+    h: ref i32
+) void = "SDL_GetWindowSizeInPixels"
+
 pub extern (C) fn set_window_grab(
     window: ref void,
     grabbed: i32
 ) void = "SDL_SetWindowGrab"
 
+pub extern (C) fn set_window_keyboard_grab(
+    window: ref void,
+    grabbed: i32
+) void = "SDL_SetWindowKeyboardGrab"
+
+pub extern (C) fn set_window_mouse_grab(
+    window: ref void,
+    grabbed: i32
+) void = "SDL_SetWindowMouseGrab"
+
 pub extern (C) fn get_window_grab(
     window: ref void
 ) i32 = "SDL_GetWindowGrab"
+
+pub extern (C) fn get_window_keyboard_grab(
+    window: ref void
+) i32 = "SDL_GetWindowKeyboardGrab"
+
+pub extern (C) fn get_window_mouse_grab(
+    window: ref void
+) i32 = "SDL_GetWindowMouseGrab"
+
+pub extern (C) fn get_grabbed_window() ref void = "SDL_GetGrabbedWindow"
+
+pub extern (C) fn set_window_mouse_rect(
+    window: ref void,
+    rect: ref Rect
+) i32 = "SDL_SetWindowMouseRect"
+
+pub extern (C) fn get_window_mouse_rect(
+    window: ref void
+) ref Rect = "SDL_GetWindowMouseRect"
+
+pub extern (C) fn set_window_modal_for(
+    modal_window: ref void,
+    parent_window: ref void
+) i32 = "SDL_SetWindowModalFor"
+
+pub extern (C) fn set_window_input_focus(window: ref void) i32 =
+    "SDL_SetWindowInputFocus"
+
+pub extern (C) fn set_window_gamma_ramp(
+    window: ref void,
+    red: ref u16,
+    green: ref u16,
+    blue: ref u16
+) i32 = "SDL_SetWindowGammaRamp"
+
+pub extern (C) fn get_window_gamma_ramp(
+    window: ref void,
+    red: ref u16,
+    green: ref u16,
+    blue: ref u16
+) i32 = "SDL_GetWindowGammaRamp"
 
 pub extern (C) fn flash_window(
     window: ref void,

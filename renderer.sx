@@ -1,0 +1,418 @@
+link "-lSDL2"
+
+pub val SDL_RENDERER_ACCELERATED = 0x00000002
+pub val SDL_RENDERER_SOFTWARE = 0x00000001
+pub val SDL_RENDERER_PRESENT_VSYNC = 0x00000004
+pub val SDL_RENDERER_TARGET_TEXTURE = 0x00000008
+
+pub val SDL_TEXTUREACCESS_STATIC = 0
+pub val SDL_TEXTUREACCESS_STREAMING = 1
+pub val SDL_TEXTUREACCESS_TARGET = 2
+
+pub val SDL_SCALEMODE_NEAREST = 0
+pub val SDL_SCALEMODE_LINEAR = 1
+pub val SDL_SCALEMODE_BEST = 2
+
+pub val SDL_BLENDMODE_NONE = 0x00000000
+pub val SDL_BLENDMODE_BLEND = 0x00000001
+pub val SDL_BLENDMODE_ADD = 0x00000002
+pub val SDL_BLENDMODE_MOD = 0x00000004
+pub val SDL_BLENDMODE_MUL = 0x00000008
+pub val SDL_BLENDMODE_INVALID = 0x7FFFFFFF
+
+pub val SDL_FLIP_NONE = 0x00000000
+pub val SDL_FLIP_HORIZONTAL = 0x00000001
+pub val SDL_FLIP_VERTICAL = 0x00000002
+
+pub extern type Point = {
+    x: i32
+    y: i32
+}
+
+pub extern type FPoint = {
+    x: f32
+    y: f32
+}
+
+pub extern type Rect = {
+    x: i32
+    y: i32
+    w: i32
+    h: i32
+}
+
+pub extern type FRect = {
+    x: f32
+    y: f32
+    w: f32
+    h: f32
+}
+
+pub extern type Color = {
+    r: u8
+    g: u8
+    b: u8
+    a: u8
+}
+
+pub extern type RendererInfo = {
+    name: cstr
+    flags: u32
+    num_texture_formats: u32
+    texture_formats: [16]u32
+    max_texture_width: i32
+    max_texture_height: i32
+}
+
+pub extern type Vertex = {
+    position: FPoint
+    color: Color
+    tex_coord: FPoint
+}
+
+pub extern (C) fn get_num_render_drivers() i32 = "SDL_GetNumRenderDrivers"
+pub extern (C) fn get_render_driver_info(
+    index: i32,
+    info: ref RendererInfo
+) i32 = "SDL_GetRenderDriverInfo"
+
+pub extern (C) fn create_renderer(
+    window: ref void,
+    index: i32,
+    flags: u32
+) ref void = "SDL_CreateRenderer"
+
+pub extern (C) fn create_software_renderer(surface: ref void) ref void =
+    "SDL_CreateSoftwareRenderer"
+
+pub extern (C) fn get_renderer(window: ref void) ref void = "SDL_GetRenderer"
+
+pub extern (C) fn render_get_window(renderer: ref void) ref void =
+    "SDL_RenderGetWindow"
+
+pub extern (C) fn get_renderer_info(
+    renderer: ref void,
+    info: ref RendererInfo
+) i32 = "SDL_GetRendererInfo"
+
+pub extern (C) fn get_renderer_output_size(
+    renderer: ref void,
+    w: ref i32,
+    h: ref i32
+) i32 = "SDL_GetRendererOutputSize"
+
+pub extern (C) fn create_texture(
+    renderer: ref void,
+    format: u32,
+    access: i32,
+    w: i32,
+    h: i32
+) ref void = "SDL_CreateTexture"
+
+pub extern (C) fn create_texture_from_surface(
+    renderer: ref void,
+    surface: ref void
+) ref void = "SDL_CreateTextureFromSurface"
+
+pub extern (C) fn query_texture(
+    texture: ref void,
+    format: ref u32,
+    access: ref i32,
+    w: ref i32,
+    h: ref i32
+) i32 = "SDL_QueryTexture"
+
+pub extern (C) fn set_texture_color_mod(
+    texture: ref void,
+    r: u8,
+    g: u8,
+    b: u8
+) i32 = "SDL_SetTextureColorMod"
+
+pub extern (C) fn get_texture_color_mod(
+    texture: ref void,
+    r: ref u8,
+    g: ref u8,
+    b: ref u8
+) i32 = "SDL_GetTextureColorMod"
+
+pub extern (C) fn set_texture_alpha_mod(
+    texture: ref void,
+    alpha: u8
+) i32 = "SDL_SetTextureAlphaMod"
+
+pub extern (C) fn get_texture_alpha_mod(
+    texture: ref void,
+    alpha: ref u8
+) i32 = "SDL_GetTextureAlphaMod"
+
+pub extern (C) fn set_texture_blend_mode(
+    texture: ref void,
+    blend_mode: u32
+) i32 = "SDL_SetTextureBlendMode"
+
+pub extern (C) fn get_texture_blend_mode(
+    texture: ref void,
+    blend_mode: ref u32
+) i32 = "SDL_GetTextureBlendMode"
+
+pub extern (C) fn set_texture_scale_mode(
+    texture: ref void,
+    scale_mode: i32
+) i32 = "SDL_SetTextureScaleMode"
+
+pub extern (C) fn get_texture_scale_mode(
+    texture: ref void,
+    scale_mode: ref i32
+) i32 = "SDL_GetTextureScaleMode"
+
+pub extern (C) fn set_texture_user_data(
+    texture: ref void,
+    userdata: ref void
+) i32 = "SDL_SetTextureUserData"
+
+pub extern (C) fn get_texture_user_data(texture: ref void) ref void =
+    "SDL_GetTextureUserData"
+
+pub extern (C) fn update_texture(
+    texture: ref void,
+    rect: ref Rect,
+    pixels: ref void,
+    pitch: i32
+) i32 = "SDL_UpdateTexture"
+
+pub extern (C) fn update_yuv_texture(
+    texture: ref void,
+    rect: ref Rect,
+    yplane: ref u8,
+    ypitch: i32,
+    uplane: ref u8,
+    upitch: i32,
+    vplane: ref u8,
+    vpitch: i32
+) i32 = "SDL_UpdateYUVTexture"
+
+pub extern (C) fn update_nv_texture(
+    texture: ref void,
+    rect: ref Rect,
+    yplane: ref u8,
+    ypitch: i32,
+    uvplane: ref u8,
+    uvpitch: i32
+) i32 = "SDL_UpdateNVTexture"
+
+pub extern (C) fn lock_texture(
+    texture: ref void,
+    rect: ref Rect,
+    pixels: ref ref void,
+    pitch: ref i32
+) i32 = "SDL_LockTexture"
+
+pub extern (C) fn lock_texture_to_surface(
+    texture: ref void,
+    rect: ref Rect,
+    surface: ref ref void
+) i32 = "SDL_LockTextureToSurface"
+
+pub extern (C) fn unlock_texture(texture: ref void) void = "SDL_UnlockTexture"
+
+pub extern (C) fn render_target_supported(renderer: ref void) i32 =
+    "SDL_RenderTargetSupported"
+
+pub extern (C) fn set_render_target(
+    renderer: ref void,
+    texture: ref void
+) i32 = "SDL_SetRenderTarget"
+
+pub extern (C) fn get_render_target(renderer: ref void) ref void =
+    "SDL_GetRenderTarget"
+
+pub extern (C) fn render_set_logical_size(
+    renderer: ref void,
+    w: i32,
+    h: i32
+) i32 = "SDL_RenderSetLogicalSize"
+
+pub extern (C) fn render_get_logical_size(
+    renderer: ref void,
+    w: ref i32,
+    h: ref i32
+) void = "SDL_RenderGetLogicalSize"
+
+pub extern (C) fn render_set_integer_scale(
+    renderer: ref void,
+    enable: i32
+) i32 = "SDL_RenderSetIntegerScale"
+
+pub extern (C) fn render_get_integer_scale(renderer: ref void) i32 =
+    "SDL_RenderGetIntegerScale"
+
+pub extern (C) fn render_set_viewport(
+    renderer: ref void,
+    rect: ref Rect
+) i32 = "SDL_RenderSetViewport"
+
+pub extern (C) fn render_get_viewport(
+    renderer: ref void,
+    rect: ref Rect
+) void = "SDL_RenderGetViewport"
+
+pub extern (C) fn render_set_clip_rect(
+    renderer: ref void,
+    rect: ref Rect
+) i32 = "SDL_RenderSetClipRect"
+
+pub extern (C) fn render_get_clip_rect(
+    renderer: ref void,
+    rect: ref Rect
+) void = "SDL_RenderGetClipRect"
+
+pub extern (C) fn render_is_clip_enabled(renderer: ref void) i32 =
+    "SDL_RenderIsClipEnabled"
+
+pub extern (C) fn render_set_scale(
+    renderer: ref void,
+    scale_x: f32,
+    scale_y: f32
+) i32 = "SDL_RenderSetScale"
+
+pub extern (C) fn render_get_scale(
+    renderer: ref void,
+    scale_x: ref f32,
+    scale_y: ref f32
+) void = "SDL_RenderGetScale"
+
+pub extern (C) fn render_window_to_logical(
+    renderer: ref void,
+    window_x: i32,
+    window_y: i32,
+    logical_x: ref f32,
+    logical_y: ref f32
+) void = "SDL_RenderWindowToLogical"
+
+pub extern (C) fn render_logical_to_window(
+    renderer: ref void,
+    logical_x: f32,
+    logical_y: f32,
+    window_x: ref i32,
+    window_y: ref i32
+) void = "SDL_RenderLogicalToWindow"
+
+pub extern (C) fn set_render_draw_color(
+    renderer: ref void,
+    r: u8,
+    g: u8,
+    b: u8,
+    a: u8
+) i32 = "SDL_SetRenderDrawColor"
+
+pub extern (C) fn get_render_draw_color(
+    renderer: ref void,
+    r: ref u8,
+    g: ref u8,
+    b: ref u8,
+    a: ref u8
+) i32 = "SDL_GetRenderDrawColor"
+
+pub extern (C) fn set_render_draw_blend_mode(
+    renderer: ref void,
+    blend_mode: u32
+) i32 = "SDL_SetRenderDrawBlendMode"
+
+pub extern (C) fn get_render_draw_blend_mode(
+    renderer: ref void,
+    blend_mode: ref u32
+) i32 = "SDL_GetRenderDrawBlendMode"
+
+pub extern (C) fn render_clear(renderer: ref void) i32 = "SDL_RenderClear"
+
+pub extern (C) fn render_draw_point(
+    renderer: ref void,
+    x: i32,
+    y: i32
+) i32 = "SDL_RenderDrawPoint"
+
+pub extern (C) fn render_draw_points(
+    renderer: ref void,
+    points: ref Point,
+    count: i32
+) i32 = "SDL_RenderDrawPoints"
+
+pub extern (C) fn render_draw_line(
+    renderer: ref void,
+    x1: i32,
+    y1: i32,
+    x2: i32,
+    y2: i32
+) i32 = "SDL_RenderDrawLine"
+
+pub extern (C) fn render_draw_lines(
+    renderer: ref void,
+    points: ref Point,
+    count: i32
+) i32 = "SDL_RenderDrawLines"
+
+pub extern (C) fn render_draw_rect(renderer: ref void, rect: ref Rect) i32 =
+    "SDL_RenderDrawRect"
+
+pub extern (C) fn render_draw_rects(
+    renderer: ref void,
+    rects: ref Rect,
+    count: i32
+) i32 = "SDL_RenderDrawRects"
+
+pub extern (C) fn render_fill_rect(renderer: ref void, rect: ref Rect) i32 =
+    "SDL_RenderFillRect"
+
+pub extern (C) fn render_fill_rects(
+    renderer: ref void,
+    rects: ref Rect,
+    count: i32
+) i32 = "SDL_RenderFillRects"
+
+pub extern (C) fn render_copy(
+    renderer: ref void,
+    texture: ref void,
+    src_rect: ref Rect,
+    dst_rect: ref Rect
+) i32 = "SDL_RenderCopy"
+
+pub extern (C) fn render_copy_ex(
+    renderer: ref void,
+    texture: ref void,
+    src_rect: ref Rect,
+    dst_rect: ref Rect,
+    angle: f64,
+    center: ref Point,
+    flip: u32
+) i32 = "SDL_RenderCopyEx"
+
+pub extern (C) fn render_copy_f(
+    renderer: ref void,
+    texture: ref void,
+    src_rect: ref FRect,
+    dst_rect: ref FRect
+) i32 = "SDL_RenderCopyF"
+
+pub extern (C) fn render_copy_ex_f(
+    renderer: ref void,
+    texture: ref void,
+    src_rect: ref FRect,
+    dst_rect: ref FRect,
+    angle: f64,
+    center: ref FPoint,
+    flip: u32
+) i32 = "SDL_RenderCopyExF"
+
+pub extern (C) fn render_read_pixels(
+    renderer: ref void,
+    rect: ref Rect,
+    format: u32,
+    pixels: ref void,
+    pitch: i32
+) i32 = "SDL_RenderReadPixels"
+
+pub extern (C) fn render_present(renderer: ref void) void = "SDL_RenderPresent"
+pub extern (C) fn render_flush(renderer: ref void) i32 = "SDL_RenderFlush"
+pub extern (C) fn destroy_texture(texture: ref void) void = "SDL_DestroyTexture"
+pub extern (C) fn destroy_renderer(renderer: ref void) void = "SDL_DestroyRenderer"
