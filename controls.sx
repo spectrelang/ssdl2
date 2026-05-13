@@ -1,0 +1,105 @@
+pub val SDL_SCANCODE_UNKNOWN = 0
+pub val SDL_SCANCODE_A = 4
+pub val SDL_SCANCODE_B = 5
+pub val SDL_SCANCODE_C = 6
+pub val SDL_SCANCODE_D = 7
+pub val SDL_SCANCODE_E = 8
+pub val SDL_SCANCODE_F = 9
+pub val SDL_SCANCODE_G = 10
+pub val SDL_SCANCODE_H = 11
+pub val SDL_SCANCODE_I = 12
+pub val SDL_SCANCODE_J = 13
+pub val SDL_SCANCODE_K = 14
+pub val SDL_SCANCODE_L = 15
+pub val SDL_SCANCODE_M = 16
+pub val SDL_SCANCODE_N = 17
+pub val SDL_SCANCODE_O = 18
+pub val SDL_SCANCODE_P = 19
+pub val SDL_SCANCODE_Q = 20
+pub val SDL_SCANCODE_R = 21
+pub val SDL_SCANCODE_S = 22
+pub val SDL_SCANCODE_T = 23
+pub val SDL_SCANCODE_U = 24
+pub val SDL_SCANCODE_V = 25
+pub val SDL_SCANCODE_W = 26
+pub val SDL_SCANCODE_X = 27
+pub val SDL_SCANCODE_Y = 28
+pub val SDL_SCANCODE_Z = 29
+pub val SDL_SCANCODE_1 = 30
+pub val SDL_SCANCODE_2 = 31
+pub val SDL_SCANCODE_3 = 32
+pub val SDL_SCANCODE_4 = 33
+pub val SDL_SCANCODE_5 = 34
+pub val SDL_SCANCODE_6 = 35
+pub val SDL_SCANCODE_7 = 36
+pub val SDL_SCANCODE_8 = 37
+pub val SDL_SCANCODE_9 = 38
+pub val SDL_SCANCODE_0 = 39
+pub val SDL_SCANCODE_RETURN = 40
+pub val SDL_SCANCODE_ESCAPE = 41
+pub val SDL_SCANCODE_BACKSPACE = 42
+pub val SDL_SCANCODE_TAB = 43
+pub val SDL_SCANCODE_SPACE = 44
+pub val SDL_SCANCODE_RIGHT = 79
+pub val SDL_SCANCODE_LEFT = 80
+pub val SDL_SCANCODE_DOWN = 81
+pub val SDL_SCANCODE_UP = 82
+pub val SDL_SCANCODE_LCTRL = 224
+pub val SDL_SCANCODE_LSHIFT = 225
+pub val SDL_SCANCODE_LALT = 226
+pub val SDL_BUTTON_LEFT     = 1
+pub val SDL_BUTTON_MIDDLE   = 2
+pub val SDL_BUTTON_RIGHT    = 3
+pub val SDL_BUTTON_X1       = 4
+pub val SDL_BUTTON_X2       = 5
+pub val SDL_PRESSED  = 1
+pub val SDL_RELEASED = 0
+
+pub extern type Keysym = {
+    scancode: i32
+    sym: i32
+    mod: u16
+    unused: u32
+}
+
+pub extern type KeyboardEvent = {
+    type: u32
+    timestamp: u32
+    windowID: u32
+    state: u8
+    repeat: u8
+    padding2: u8
+    padding3: u8
+    keysym: Keysym
+}
+
+pub extern type MouseMotionEvent = {
+    type: u32
+    timestamp: u32
+    windowID: u32
+    which: u32
+    state: u32
+    x: i32
+    y: i32
+    xrel: i32
+    yrel: i32
+}
+
+pub extern type MouseButtonEvent = {
+    type: u32
+    timestamp: u32
+    windowID: u32
+    which: u32
+    button: u8
+    state: u8
+    clicks: u8
+    padding1: u8
+    x: i32
+    y: i32
+}
+
+pub extern (C) fn get_keyboard_state(numkeys: ref i32) ref u8 = "SDL_GetKeyboardState"
+pub extern (C) fn get_mouse_state(x: ref i32, y: ref i32) u32 = "SDL_GetMouseState"
+pub extern (C) fn get_relative_mouse_state(x: ref i32, y: ref i32) u32 = "SDL_GetRelativeMouseState"
+pub extern (C) fn set_relative_mouse_mode(enabled: i32) i32 = "SDL_SetRelativeMouseMode"
+pub extern (C) fn get_relative_mouse_mode() i32 = "SDL_GetRelativeMouseMode"
