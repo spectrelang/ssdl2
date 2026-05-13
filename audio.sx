@@ -1,20 +1,34 @@
 pub val SDL_AUDIO_MASK_BITSIZE = 0x000000FF
 pub val SDL_AUDIO_MASK_DATATYPE = 1 << 8
-pub val SDL_AUDIO_MASK_ENDIANi = 1 << 12
+pub val SDL_AUDIO_MASK_ENDIAN = 1 << 12
 pub val SDL_AUDIO_MASK_SIGNED = 1 << 15
+
+pub val SDL_AUDIO_ALLOW_FREQUENCY_CHANGE = 0x00000001
+pub val SDL_AUDIO_ALLOW_FORMAT_CHANGE = 0x00000002
+pub val SDL_AUDIO_ALLOW_CHANNELS_CHANGE = 0x00000004
+pub val SDL_AUDIO_ALLOW_SAMPLES_CHANGE = 0x00000008
+pub val SDL_AUDIO_ALLOW_ANY_CHANGE =
+    SDL_AUDIO_ALLOW_FREQUENCY_CHANGE |
+    SDL_AUDIO_ALLOW_FORMAT_CHANGE |
+    SDL_AUDIO_ALLOW_CHANNELS_CHANGE |
+    SDL_AUDIO_ALLOW_SAMPLES_CHANGE
+pub val SDL_MIX_MAXVOLUME = 128
 
 pub extern type AudioSpec = {
     freq: i32
     format: u16
     channels: u8
+    silence: u8
     samples: u16
+    padding: u16
     size: u32
     callback: ref void
     user_data: ref void
 }
 
 pub extern type AudioCVT = {
-    needed: u16
+    needed: i32
+    src_format: u16
     dst_format: u16
     rate_incr: f64
     buf: ref u8
@@ -26,5 +40,32 @@ pub extern type AudioCVT = {
     filter_index: i32
 }
 
-test {
-}
+pub extern (C) fn open_audio(
+    desired: ref AudioSpec,
+    obtained: ref AudioSpec
+) i32 = "SDL_OpenAudio"
+
+pub extern (C) fn close_audio() void = "SDL_CloseAudio"
+pub extern (C) fn pause_audio(pause_on: i32) void = "SDL_PauseAudio"
+pub extern (C) fn lock_audio() void = "SDL_LockAudio"
+pub extern (C) fn unlock_audio() void = "SDL_UnlockAudio"
+pub extern (C) fn open_audio_device(
+    device: cstr,
+    iscapture: i32,
+    desired: ref AudioSpec,
+    obtained: ref AudioSpec,
+    allowed_changes: i32
+) u32 = "SDL_OpenAudioDevice"
+
+pub extern (C) fn close_audio_device(dev: u32) void = "SDL_CloseAudioDevice"
+pub extern (C) fn queue_audio(
+    dev: u32,
+    data: ref void,
+    len: u32
+) i32 = "SDL_QueueAudio"
+
+pub extern (C) fn dequeue_audio(
+    dev: u32,
+    data: ref void,
+    len: u32
+) u32 = "SDL_DequeueAudio"
